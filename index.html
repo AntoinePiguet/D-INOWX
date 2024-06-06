@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style/style.css" />
+    <title>Patch</title>
+
+    <!-- Inclusion des 3 scripts nécessaires pour faire fonctionner le jeu -->
+    <script src="scripts/config.js" defer></script>
+    <script src="scripts/script.js" defer></script>
+    <script src="scripts/main.js" defer></script>
+    <script src="scripts/Contenu.js" defer></script>
+    <script src="scripts/HealthPage.js" defer></script>
+  </head>
+  <!-- ______________Body______________-->
+  <body>
+    <span class="left"></span>
+    <div class="center">
+      <!--______________header_______________-->
+      <header>
+        <span class="Patch">
+          <h4 id="logo">Patch</h4>
+        </span>
+        <span class="réglages">
+          <p>Bienvenue Yohan !</p>
+          <button>
+            <div>
+              <img src="images/setting.png" alt="réglages" id="set" />
+            </div>
+          </button>
+        </span>
+      </header>
+      <!--______________main_______________-->
+      <main>
+        <div id="mainLeft"></div>
+        <div class="homeContainer">
+          <div class="box one">Sant-E A</div>
+          <div class="box two">Lorem ipsum dolor sit amet</div>
+          <div class="box three">Mise-à-jour: Auncune détectée</div>
+          <div class="box four">Recommandations</div>
+          <div class="box five">Alimentation</div>
+          <div class="box six">Hydratation</div>
+        </div>
+        <div id="mainRight"></div>
+      </main>
+      <!--______________footer_______________-->
+      <footer>
+        <button>
+          <img
+            src="images/ambulance.png"
+            alt="appel d'urgence"
+            id="ambulance"
+          />
+        </button>
+        <button><img src="images/user.png" alt="user" id="user" /></button>
+        <button>
+          <img src="images/house.png" alt="homepage" id="home" />
+        </button>
+        <button>
+          <img src="images/conversation.png" alt="messages" id="texts" />
+        </button>
+        <button>
+          <img src="images/heart-beat.png" alt="infos médicales" id="health" />
+        </button>
+      </footer>
+    </div>
+    <div class="right"></div>
+  </body>
+</html>
