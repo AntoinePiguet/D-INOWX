@@ -3,14 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style/style.css" />
+    <link rel="stylesheet" href="/static/style/style.css" />
     <title>Patch</title>
-
-    <!-- Inclusion des 3 scripts nécessaires pour faire fonctionner le jeu -->
-
-    <script src="scripts/Contenu.js" defer></script>
-    <script src="scripts/HealthPage.js" defer></script>
-    <script src="scripts/Texts.js" defer></script>
   </head>
   <!-- ______________Body______________-->
   <body>
@@ -19,65 +13,124 @@
       <!--______________header_______________-->
       <header>
         <span class="Patch">
-          <img src="images/image.png" alt="logo" id="logo" />
+          <img src="/static/images/image.png" alt="logo" id="logo" />
         </span>
         <span class="réglages">
           <p>Bienvenue Yohan !</p>
-          <button>
-            <div>
-              <img src="images/setting.png" alt="réglages" id="set" />
-            </div>
+          <button class="button-set">
+            <img
+              src="/static/images/setting.png"
+              alt="réglages"
+              id="set"
+              onclick="changeMainContent('set')"
+            />
           </button>
         </span>
       </header>
       <!--______________main_______________-->
-      <main>
-        <div id="mainLeft"></div>
-        <div class="homeContainer">
-          <div class="box one">Sant-E A</div>
-          <div class="box two">page d'accueil.</div>
-          <div class="box three">Aucune maj</div>
-          <div class="box four">Recommandations</div>
-          <div class="box five">Alimentation</div>
-          <div class="box six">Hydratation</div>
-        </div>
-        <div id="mainRight"></div>
+      <main class="mainContent">
+        <div id="mainContent"><!-- content here --></div>
       </main>
       <!--______________footer_______________-->
       <footer>
-        <div class="leRond">
+        <!-- <div class="leRond">
           <div id="box0" class="boxer"></div>
           <div id="box1" class="boxer"></div>
           <div id="box2" class="boxer"></div>
           <div id="box3" class="boxer"></div>
           <div id="box4" class="boxer"></div>
+        </div>-->
+        <div class="footerGrid">
+          <button id="ambulance" onclick="changeMainContent('ambulance')">
+            <div class="button">
+              <img src="/static/images/ambulance.png" alt="appel d'urgence" />
+            </div>
+          </button>
+          <button id="user" onclick="changeMainContent('user')">
+            <div class="button">
+              <img src="/static/images/user.png" alt="user" />
+            </div>
+          </button>
+          <button id="home" onclick="changeMainContent('home')">
+            <div class="button">
+              <img src="/static/images/house.png" alt="homepage" />
+            </div>
+          </button>
+          <button id="texts" onclick="changeMainContent('texts')">
+            <div class="button">
+              <img src="/static/images/conversation.png" alt="messages" />
+            </div>
+          </button>
+          <button id="health" onclick="changeMainContent('health')">
+            <div class="button">
+              <img src="/static/images/heart-beat.png" alt="infos médicales" />
+            </div>
+          </button>
         </div>
-
-        <span class="footerGrid">
-          <button>
-            <img
-              src="images/ambulance.png"
-              alt="appel d'urgence"
-              id="ambulance"
-            />
-          </button>
-          <button><img src="images/user.png" alt="user" id="user" /></button>
-          <button>
-            <img src="images/house.png" alt="homepage" id="home" />
-          </button>
-          <button>
-            <img src="images/conversation.png" alt="messages" id="texts" />
-          </button>
-          <button>
-            <img
-              src="images/heart-beat.png"
-              alt="infos médicales"
-              id="health"
-            />
-          </button>
-        </span>
+        <div class="footerTop"></div>
+        <div class="footerBottom"></div>
       </footer>
     </div>
     <div class="right"></div>
+    <!-- Inclusion des 3 scripts nécessaires pour faire fonctionner le jeu -->
+    <script src="/static/scripts/contents.js"></script>
+
+    <!-- <script src="/static/scripts/Contenu.js"></script>
+    <script src="/static/scripts/HealthPage.js"></script>-->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      // page initial au load
+      var mainContent = document.getElementById("mainContent");
+      mainContent.innerHTML = pageHome();
+
+      const pagesContent = {
+        ambulance: pageAmbulance(),
+        user: pageUser(),
+        home: pageHome(),
+        texts: pageTexts(),
+        health: pageHealth(),
+        set: pageSettings(),
+      };
+
+      // changer le contenu au click d'un boutton
+      function changeMainContent(page) {
+        mainContent.innerHTML = pagesContent[page]; // pagesContent['user']
+
+        const active = document.querySelector("button.active");
+        if (active) {
+          active.classList.remove("active");
+        }
+        document.getElementById(page).classList.add("active");
+
+        if (page === "texts") {
+          setTimeout(() => {
+            formMsg();
+          }, 1000);
+        }
+      }
+      var socket = io();
+
+      function formMsg() {
+        var form = document.getElementById("form");
+        var input = document.getElementById("input");
+        var messages = document.getElementById("messages");
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          if (input.value) {
+            socket.emit("chat message", input.value);
+            input.value = "";
+          }
+        });
+      }
+
+      socket.on("chat message", function (msg) {
+        var item = document.createElement("li");
+        item.textContent = msg;
+        messages.appendChild(item);
+        messages.scrollTop = messages.scrollHeight;
+        //window.scrollTo(0, document.body.scrollHeight);
+      });
+    </script>
   </body>
 </html>
