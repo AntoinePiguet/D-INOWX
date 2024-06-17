@@ -2,6 +2,13 @@
 function pageTexts() {
   const contenuDivTexts = " Tout le contenu de la page des messages";
   const divTexts = `
+    <section>
+      <h2 id="textee">Liste de notes</h2>
+      <% for(i=0; i<resultat.length; i++){ %>
+        <h3> <%= resultat[i].titre %></h3>
+        <p><%= resultat[i].descritpion %></p>
+      <% } %>
+    </section>
     <ul id="messages"></ul>    
     <form id="form" action="">      
       <input id="input" autocomplete="off" /><button>Send</button>
@@ -26,7 +33,7 @@ function pageHome() {
           <div class="gridContent">
             <div class="box one">Sant-E A</div>
             <div class="box two">page d'accueil.</div>
-            <div class="box three">Aucune maj</div>
+            <div class="box three">Aucune maj pour l'instant veuilliez patienter.</div>
             <div class="box four">Recommandations</div>
             <div class="box five">Alimentation</div>
             <div class="box six">Hydratation</div>
